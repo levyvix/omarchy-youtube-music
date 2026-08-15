@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "levi.youtube-music",
+  "name": "YouTube Music",
+  "version": "0.2.0",
+  "author": "Levy Vix",
+  "license": "MIT",
+  "description": "YouTube Music MPRIS controller with album art, progress, and playback controls.",
+  "homepage": "https://github.com/levyvix/omarchy-youtube-music",
+  "repository": "https://github.com/levyvix/omarchy-youtube-music",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "YouTube Music",
+    "description": "Show the current YouTube Music track and control playback.",
+    "category": "Media",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
