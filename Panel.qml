@@ -15,7 +15,8 @@ Panel {
 
   function isBrowser(candidate) {
     var identity = String(candidate && candidate.identity || "").toLowerCase()
-    return identity === "chromium"
+    return identity === "chrome"
+      || identity === "chromium"
       || identity.indexOf("mozilla zen") !== -1
       || identity.indexOf("firefox") !== -1
   }
