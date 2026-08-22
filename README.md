@@ -8,13 +8,13 @@ album art, artist, album, progress, and playback controls in a popup panel.
 ## Requirements
 
 - Omarchy Quattro with Quickshell
-- YouTube Music open in Google Chrome, Chromium, Firefox, or Zen
+- YouTube Music open in Brave, Google Chrome, Chromium, Firefox, or Zen
 - A browser that exposes the current media tab through MPRIS
 
 The plugin does not start a background service, use browser automation, or
 store account data. Browser MPRIS metadata can omit the page URL, so an active
-Google Chrome, Chromium, Firefox, or Zen browser player is used as a fallback
-when it is playing.
+Brave, Google Chrome, Chromium, Firefox, or Zen browser player is used as a
+fallback when it is playing.
 
 ## Install
 

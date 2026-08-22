@@ -17,6 +17,7 @@ Panel {
     var identity = String(candidate && candidate.identity || "").toLowerCase()
     return identity === "chrome"
       || identity === "chromium"
+      || identity.indexOf("brave") !== -1
       || identity.indexOf("mozilla zen") !== -1
       || identity.indexOf("firefox") !== -1
   }
@@ -48,6 +49,8 @@ Panel {
 
   Instantiator {
     model: root.players
+    onObjectAdded: root.selectPlayer()
+    onObjectRemoved: root.selectPlayer()
     delegate: Connections {
       required property var modelData
       target: modelData
