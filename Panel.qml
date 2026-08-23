@@ -100,7 +100,8 @@ Panel {
 
     onPressed: function(buttonCode) {
       if (buttonCode === Qt.MiddleButton && root.player) root.player.togglePlaying()
-      else root.toggle()
+      else if (buttonCode === Qt.RightButton && root.player && root.player.canGoNext) root.player.next()
+      else if (buttonCode === Qt.LeftButton) root.toggle()
     }
   }
 
