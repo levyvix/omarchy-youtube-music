@@ -25,7 +25,7 @@ omarchy plugin add https://github.com/levyvix/omarchy-youtube-music.git --enable
 Place it in the bar if needed:
 
 ```sh
-omarchy bar move levi.youtube-music --section right
+omarchy bar move levi.youtube-music --section left
 ```
 
 ## Controls
