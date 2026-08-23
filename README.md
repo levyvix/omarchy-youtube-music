@@ -32,6 +32,7 @@ omarchy bar move levi.youtube-music --section left
 
 - Left click the music icon to open or close the panel.
 - Middle click toggles play/pause.
+- Right click plays the next track.
 - `Space` toggles play/pause.
 - `n` or Right arrow plays the next track.
 - `p` or Left arrow plays the previous track.
