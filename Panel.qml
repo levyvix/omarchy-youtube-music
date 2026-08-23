@@ -65,6 +65,9 @@ Panel {
   readonly property string artistName: player ? (player.trackArtist || "") : ""
   readonly property string trackTitle: player ? (player.trackTitle || "Untitled track") : ""
   readonly property string albumName: player ? (player.trackAlbum || "") : ""
+  readonly property string barText: player
+    ? ("󰝚  " + trackTitle + (artistName ? " — " + artistName : ""))
+    : "󰝚  YouTube Music"
 
   readonly property color contentForeground: bar ? bar.barForeground : Color.foreground
   readonly property color dimForeground: Qt.darker(contentForeground, 1.45)
@@ -86,7 +89,10 @@ Panel {
     id: button
     anchors.fill: parent
     bar: root.bar
-    text: "󰝚"
+    text: root.barText
+    labelVisible: true
+    fixedWidth: -1
+    fontSize: Style.font.caption
     active: false
     useActiveColor: false
     foreground: root.playing ? root.contentForeground : Qt.darker(root.contentForeground, 1.9)
@@ -325,6 +331,16 @@ Panel {
               onClicked: if (root.player) root.player.next()
             }
           }
+        }
+
+        Text {
+          width: parent.width
+          text: "Space play/pause  •  n/p or ←/→ track  •  Esc close"
+          color: root.dimForeground
+          font.family: root.contentFontFamily
+          font.pixelSize: Style.font.caption
+          horizontalAlignment: Text.AlignHCenter
+          wrapMode: Text.WordWrap
         }
       }
     }
