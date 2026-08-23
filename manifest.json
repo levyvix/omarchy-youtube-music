@@ -17,6 +17,6 @@
     "description": "Show the current YouTube Music track and control playback.",
     "category": "Media",
     "allowMultiple": false,
-    "defaultSection": "right"
+    "defaultSection": "left"
   }
 }
