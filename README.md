@@ -12,9 +12,8 @@ album art, artist, album, progress, and playback controls in a popup panel.
 - A browser that exposes the current media tab through MPRIS
 
 The plugin does not start a background service, use browser automation, or
-store account data. Browser MPRIS metadata can omit the page URL, so an active
-Brave, Google Chrome, Chromium, Firefox, or Zen browser player is used as a
-fallback when it is playing.
+store account data. It activates only when MPRIS identifies YouTube Music or
+reports a `music.youtube.com` URL.
 
 ## Install
 

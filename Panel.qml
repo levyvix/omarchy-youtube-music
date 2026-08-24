@@ -13,15 +13,6 @@ Panel {
   readonly property var players: Mpris.players ? Mpris.players.values : []
   property var player: null
 
-  function isBrowser(candidate) {
-    var identity = String(candidate && candidate.identity || "").toLowerCase()
-    return identity === "chrome"
-      || identity === "chromium"
-      || identity.indexOf("brave") !== -1
-      || identity.indexOf("mozilla zen") !== -1
-      || identity.indexOf("firefox") !== -1
-  }
-
   function isYoutubeMusic(candidate) {
     if (!candidate) return false
     var metadata = candidate.metadata || {}
@@ -29,7 +20,6 @@ Panel {
     var identity = String(candidate.identity || "").toLowerCase()
     return identity.indexOf("youtube music") !== -1
       || url.indexOf("music.youtube.com") !== -1
-      || (isBrowser(candidate) && candidate.isPlaying)
   }
 
   function selectPlayer() {
