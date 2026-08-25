@@ -12,8 +12,10 @@ album art, artist, album, progress, and playback controls in a popup panel.
 - A browser that exposes the current media tab through MPRIS
 
 The plugin does not start a background service, use browser automation, or
-store account data. It activates only when MPRIS identifies YouTube Music or
-reports a `music.youtube.com` URL.
+store account data. It activates when MPRIS identifies YouTube Music, reports a
+`music.youtube.com` URL, or -- for browsers that expose neither, such as Google
+Chrome -- when a browser player reports a non-empty `xesam:album`, which
+YouTube Music sets and regular videos leave empty.
 
 ## Install
 
@@ -38,8 +40,9 @@ omarchy bar move levi.youtube-music --section left
 - Drag the progress bar to seek.
 - `Escape` closes the panel.
 
-The panel keeps the last detected browser player while it remains connected,
-so pausing a track does not make the panel appear idle.
+The panel keeps the last detected browser player while it remains connected
+*and* still reports YouTube Music, so pausing a track does not make the panel
+appear idle, while switching that tab to a regular video clears it.
 
 ## Validate locally
 
