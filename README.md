@@ -1,3 +1,5 @@
+![YouTube Music popup](preview.png)
+
 # Omarchy YouTube Music
 
 A YouTube Music controller for the Omarchy Quickshell bar.
@@ -42,7 +44,8 @@ omarchy bar move levi.youtube-music --section left
 
 The panel keeps the last detected browser player while it remains connected
 *and* still reports YouTube Music, so pausing a track does not make the panel
-appear idle, while switching that tab to a regular video clears it.
+appear idle, while switching that tab to a regular video clears it. Long track
+labels are truncated in the bar and remain available in the tooltip and panel.
 
 ## Validate locally
 
