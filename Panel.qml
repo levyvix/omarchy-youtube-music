@@ -78,9 +78,10 @@ Panel {
   readonly property string artistName: player ? (player.trackArtist || "") : ""
   readonly property string trackTitle: player ? (player.trackTitle || "Untitled track") : ""
   readonly property string albumName: player ? (player.trackAlbum || "") : ""
-  readonly property string barText: player
+  readonly property string fullBarText: player
     ? ("󰝚  " + trackTitle + (artistName ? " — " + artistName : ""))
     : "󰝚  YouTube Music"
+  readonly property string barText: barTextMetrics.elidedText
 
   readonly property color contentForeground: bar ? bar.foreground : Color.foreground
   readonly property color dimForeground: Qt.darker(contentForeground, 1.45)
@@ -96,6 +97,15 @@ Panel {
     running: root.playing
     repeat: true
     onTriggered: if (root.player) root.player.positionChanged()
+  }
+
+  TextMetrics {
+    id: barTextMetrics
+    text: root.fullBarText
+    font.family: root.contentFontFamily
+    font.pixelSize: Style.font.caption
+    elide: Text.ElideRight
+    elideWidth: Style.space(180)
   }
 
   BarIconButton {
