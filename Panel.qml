@@ -69,7 +69,7 @@ Panel {
     ? ("󰝚  " + trackTitle + (artistName ? " — " + artistName : ""))
     : "󰝚  YouTube Music"
 
-  readonly property color contentForeground: bar ? bar.barForeground : Color.foreground
+  readonly property color contentForeground: bar ? bar.foreground : Color.foreground
   readonly property color dimForeground: Qt.darker(contentForeground, 1.45)
   readonly property color subtleFill: Style.normalFillFor(contentForeground, Color.accent)
   readonly property color subtleBorder: Style.normalBorderFor(contentForeground, Color.accent)
@@ -95,7 +95,7 @@ Panel {
     fontSize: Style.font.caption
     active: false
     useActiveColor: false
-    foreground: root.playing ? root.contentForeground : Qt.darker(root.contentForeground, 1.9)
+    foreground: root.barForeground
     tooltipText: root.player ? (root.trackTitle + (root.artistName ? " — " + root.artistName : "")) : "YouTube Music"
 
     onPressed: function(buttonCode) {
