@@ -13,13 +13,28 @@ Panel {
   readonly property var players: Mpris.players ? Mpris.players.values : []
   property var player: null
 
+  function isBrowser(candidate) {
+    var identity = String(candidate && candidate.identity || "").toLowerCase()
+    return identity.indexOf("chrome") !== -1
+      || identity.indexOf("chromium") !== -1
+      || identity.indexOf("brave") !== -1
+      || identity.indexOf("firefox") !== -1
+      || identity.indexOf("mozilla zen") !== -1
+  }
+
   function isYoutubeMusic(candidate) {
     if (!candidate) return false
     var metadata = candidate.metadata || {}
     var url = String(metadata["xesam:url"] || "").toLowerCase()
     var identity = String(candidate.identity || "").toLowerCase()
-    return identity.indexOf("youtube music") !== -1
-      || url.indexOf("music.youtube.com") !== -1
+    if (identity.indexOf("youtube music") !== -1) return true
+    if (url.indexOf("music.youtube.com") !== -1) return true
+    // Chrome identifies only as "Chrome" and publishes no xesam:url at all, so
+    // neither check above can ever fire for it. Of the keys Chrome does
+    // publish, xesam:album is the discriminator: YouTube Music populates it,
+    // while a regular YouTube video publishes it as an empty string. This is
+    // much narrower than matching any playing browser.
+    return isBrowser(candidate) && String(metadata["xesam:album"] || "") !== ""
   }
 
   function selectPlayer() {
@@ -30,7 +45,11 @@ Panel {
         return
       }
     }
-    if (player && players.indexOf(player) !== -1) return
+    // Keep a paused player only while it STILL looks like YouTube Music.
+    // A browser exposes one MPRIS player for the whole process, shared by every
+    // tab, so a player retained purely because it is still connected silently
+    // becomes whatever that browser plays next.
+    if (player && players.indexOf(player) !== -1 && isYoutubeMusic(player)) return
     player = null
   }
 
@@ -45,6 +64,10 @@ Panel {
       required property var modelData
       target: modelData
       function onIsPlayingChanged() { root.selectPlayer() }
+      // The shared player's track can change from a YouTube Music song to a
+      // video without isPlaying ever toggling, so re-evaluate on metadata too.
+      function onTrackTitleChanged() { root.selectPlayer() }
+      function onTrackAlbumChanged() { root.selectPlayer() }
     }
   }
 
