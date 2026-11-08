@@ -16,8 +16,11 @@ album art, artist, album, progress, and playback controls in a popup panel.
 The plugin does not start a background service, use browser automation, or
 store account data. It activates when MPRIS identifies YouTube Music, reports a
 `music.youtube.com` URL, or -- for browsers that expose neither, such as Google
-Chrome -- when a browser player reports a non-empty `xesam:album`, which
-YouTube Music sets and regular videos leave empty.
+Chrome and Chromium -- when a browser player reports a non-empty
+`xesam:album`, which YouTube Music sets and regular videos leave empty, or when
+an open window is titled `<current track> | YouTube Music`. The window check
+covers podcast episodes, which have no album, in the YouTube Music web app or a
+focused browser tab.
 
 ## Install
 
