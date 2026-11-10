@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Mpris
+import Quickshell.Wayland
 import qs.Commons
 import qs.Ui
 
@@ -12,6 +13,22 @@ Panel {
 
   readonly property var players: Mpris.players ? Mpris.players.values : []
   property var player: null
+  // Not readonly so tests can substitute plain { title } objects.
+  property var toplevels: ToplevelManager.toplevels ? ToplevelManager.toplevels.values : []
+
+  // True when an open window's title names both YouTube Music and the
+  // candidate's current track. YouTube Music titles its page
+  // "<track> | YouTube Music", and that title reaches the compositor both for
+  // the Omarchy web app window and for a focused browser tab.
+  function hasYoutubeMusicWindowFor(candidate) {
+    var track = String(candidate && candidate.trackTitle || "").toLowerCase()
+    if (track === "") return false
+    for (var i = 0; i < toplevels.length; i++) {
+      var title = String(toplevels[i] && toplevels[i].title || "").toLowerCase()
+      if (title.indexOf("youtube music") !== -1 && title.indexOf(track) !== -1) return true
+    }
+    return false
+  }
 
   function isBrowser(candidate) {
     var identity = String(candidate && candidate.identity || "").toLowerCase()
@@ -29,6 +46,12 @@ Panel {
     var identity = String(candidate.identity || "").toLowerCase()
     if (identity.indexOf("youtube music") !== -1) return true
     if (url.indexOf("music.youtube.com") !== -1) return true
+    // Chromium-family browsers publish no xesam:url, and YouTube Music leaves
+    // xesam:album empty for podcast episodes, so the album check below misses
+    // them. A window titled "<this track> | YouTube Music" settles it. Matching
+    // the track title too keeps a different tab in the same browser process
+    // (which shares this one MPRIS player) from being claimed.
+    if (isBrowser(candidate) && hasYoutubeMusicWindowFor(candidate)) return true
     // Chrome identifies only as "Chrome" and publishes no xesam:url at all, so
     // neither check above can ever fire for it. Of the keys Chrome does
     // publish, xesam:album is the discriminator: YouTube Music populates it,
@@ -68,6 +91,20 @@ Panel {
       // video without isPlaying ever toggling, so re-evaluate on metadata too.
       function onTrackTitleChanged() { root.selectPlayer() }
       function onTrackAlbumChanged() { root.selectPlayer() }
+    }
+  }
+
+  // The window title can update after the MPRIS metadata does, so
+  // re-evaluate when windows open, close, or retitle.
+  Instantiator {
+    model: root.toplevels
+    onObjectAdded: root.selectPlayer()
+    onObjectRemoved: root.selectPlayer()
+    delegate: Connections {
+      required property var modelData
+      target: modelData
+      ignoreUnknownSignals: true
+      function onTitleChanged() { root.selectPlayer() }
     }
   }
 
