@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Services.Mpris
 import Quickshell.Wayland
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 Panel {
@@ -120,10 +121,10 @@ Panel {
     : "󰝚  YouTube Music"
   readonly property string barText: barTextMetrics.elidedText
 
-  readonly property color contentForeground: bar ? bar.foreground : Color.foreground
+  readonly property color contentForeground: bar ? bar.foreground : Commons.Color.foreground
   readonly property color dimForeground: Qt.darker(contentForeground, 1.45)
-  readonly property color subtleFill: Style.normalFillFor(contentForeground, Color.accent)
-  readonly property color subtleBorder: Style.normalBorderFor(contentForeground, Color.accent)
+  readonly property color subtleFill: Style.normalFillFor(contentForeground, Commons.Color.accent)
+  readonly property color subtleBorder: Style.normalBorderFor(contentForeground, Commons.Color.accent)
   readonly property string contentFontFamily: bar ? bar.fontFamily : Style.font.family
 
   implicitWidth: button.implicitWidth
@@ -217,7 +218,7 @@ Panel {
             Text {
               anchors.centerIn: parent
               text: "󰝚"
-              color: Color.accent
+              color: Commons.Color.accent
               opacity: 0.42
               font.family: root.contentFontFamily
               font.pixelSize: Style.font.displayLarge
@@ -355,7 +356,7 @@ Panel {
               iconText: "\uf048"
               tooltipText: "Previous track"
               foreground: root.contentForeground
-              hoverColor: Color.accent
+              hoverColor: Commons.Color.accent
               fontFamily: root.contentFontFamily
               fontSize: Style.font.body
               size: Style.space(28)
@@ -368,8 +369,8 @@ Panel {
               anchors.verticalCenter: parent.verticalCenter
               iconText: root.playing ? "\uf04c" : "\uf04b"
               tooltipText: root.playing ? "Pause" : "Play"
-              foreground: Color.accent
-              hoverColor: Color.accent
+              foreground: Commons.Color.accent
+              hoverColor: Commons.Color.accent
               fontFamily: root.contentFontFamily
               fontSize: Style.font.iconLarge
               size: Style.space(34)
@@ -383,7 +384,7 @@ Panel {
               iconText: "\uf051"
               tooltipText: "Next track"
               foreground: root.contentForeground
-              hoverColor: Color.accent
+              hoverColor: Commons.Color.accent
               fontFamily: root.contentFontFamily
               fontSize: Style.font.body
               size: Style.space(28)
